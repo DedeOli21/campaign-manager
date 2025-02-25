@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CampaignRepository } from 'src/domain/repositories/campaign.repository';
+import { CampaignRepository } from '@domain/repositories/campaign.repository';
 
 @Injectable()
 export class FindAllCampaignUseCase {

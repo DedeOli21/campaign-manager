@@ -1,0 +1,17 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+      "module": "CommonJS",
+      "baseUrl": "./",
+      "paths": {
+        "@app/*": ["src/application/*"],
+        "@config/*": ["src/config/*"],
+        "@domain/*": ["src/domain/*"],
+        "@db/*": ["src/db/*"],
+        "@presentation/*": ["src/presentation/*"],
+        "@shared/*": ["src/shared/*"],
+        "@test/*": ["test/*"]
+      }
+    }
+  }
+  

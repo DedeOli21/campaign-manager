@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CampaignRepository } from 'src/domain/repositories/campaign.repository';
-import { DeleteCampaignDto } from 'src/presentation/campaign/dto/delete-campaign.dto';
+import { CampaignRepository } from '@domain/repositories/campaign.repository';
+import { DeleteCampaignDto } from '@presentation/campaign/dto/delete-campaign.dto';
 
 @Injectable()
 export class DeleteCampaignUseCase {
