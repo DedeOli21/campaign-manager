@@ -30,4 +30,9 @@ export class CampaignService {
         Object.assign(campaign, updateCampaignDto);
         return this.campaignRepository.save(campaign);
       }
+
+      async remove(id: number): Promise<void> {
+        await this.findOne(id);
+        await this.campaignRepository.delete(id)
+      }
 }

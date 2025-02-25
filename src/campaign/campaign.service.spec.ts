@@ -137,4 +137,18 @@ describe('CampaignService', () => {
   
     expect(result).toEqual(updatedCampaign);
   });
+
+  it('should remove a campaign', async () => {
+    const campaign = mockCampaigns[0];
+
+    mockRepository.findOne.mockResolvedValue(campaign);
+
+    await service.remove(campaign.id);
+
+    expect(mockRepository.findOne).toHaveBeenCalledWith({
+      where: { id: campaign.id },
+    });
+
+    expect(mockRepository.delete).toHaveBeenCalledWith(campaign.id);
+  });
 });
