@@ -18,7 +18,7 @@ export class CampaignService {
       async create(campaign: Campaign): Promise<Campaign> {
         const { endDate, startDate } = campaign;
 
-        if (endDate < startDate) {
+        if (endDate > startDate) {
           throw new Error('End date must be greater than start date');
         }
 

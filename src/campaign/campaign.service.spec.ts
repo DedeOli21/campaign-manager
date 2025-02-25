@@ -89,7 +89,7 @@ describe('CampaignService', () => {
         name: 'Campanha 6',
         createdAt: new Date(),
         startDate: new Date(),
-        endDate: new Date(new Date().getTime() + 1000 * 60 * 60 * 24),
+        endDate: new Date(new Date().getTime() - 1000 * 60 * 60 * 24),
         status: CampaignStatus.ACTIVE,
         category: 'Tecnologia',
       };
@@ -108,7 +108,7 @@ describe('CampaignService', () => {
         name: 'Campanha 6',
         createdAt: new Date(),
         startDate: new Date(),
-        endDate: new Date(new Date().getTime() - 1000 * 60 * 60 * 24),
+        endDate: new Date(new Date().getTime() + 1000 * 60 * 60 * 24),
         status: CampaignStatus.ACTIVE,
         category: 'Tecnologia',
       };
