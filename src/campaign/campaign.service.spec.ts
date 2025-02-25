@@ -3,11 +3,9 @@ import { CampaignService } from './campaign.service';
 import { Campaign, CampaignStatus } from './entities/campaign.entity';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { create } from 'domain';
 
 describe('CampaignService', () => {
   let service: CampaignService;
-  let repository: Repository<Campaign>;
 
   const mockCampaigns: Campaign[] = [
     {
@@ -93,14 +91,14 @@ describe('CampaignService', () => {
         status: CampaignStatus.ACTIVE,
         category: 'Tecnologia',
       };
-  
+
       mockRepository.save.mockResolvedValue(newCampaign);
-  
+
       const createdCampaign = await service.create(newCampaign);
-  
+
       expect(createdCampaign).toEqual(newCampaign);
       expect(mockRepository.save).toHaveBeenCalledWith(newCampaign);
-    })
+    });
 
     it('if the end date is before the start date, should throw an error', async () => {
       const newCampaign: Campaign = {
@@ -112,11 +110,11 @@ describe('CampaignService', () => {
         status: CampaignStatus.ACTIVE,
         category: 'Tecnologia',
       };
-  
+
       mockRepository.save.mockResolvedValue(newCampaign);
-  
+
       await expect(service.create(newCampaign)).rejects.toThrow();
-    })
+    });
 
     it('if the end date for less than date now, should be status expired', async () => {
       const newCampaign: Campaign = {
@@ -128,14 +126,13 @@ describe('CampaignService', () => {
         status: CampaignStatus.ACTIVE,
         category: 'Tecnologia',
       };
-  
+
       mockRepository.save.mockResolvedValue(newCampaign);
-  
+
       const createdCampaign = await service.create(newCampaign);
-  
+
       expect(createdCampaign.status).toEqual(CampaignStatus.EXPIRED);
     });
-    
   });
 
   it('should be defined', () => {
@@ -148,8 +145,6 @@ describe('CampaignService', () => {
     expect(campaigns).toEqual(mockCampaigns);
   });
 
-  ;
-
   it('should update a campaign', async () => {
     const updatedCampaign: Campaign = {
       id: 1,
@@ -160,10 +155,10 @@ describe('CampaignService', () => {
       status: CampaignStatus.ACTIVE,
       category: 'Marketing',
     };
-  
+
     mockRepository.findOne.mockResolvedValue(updatedCampaign);
     mockRepository.save.mockResolvedValue(updatedCampaign);
-  
+
     await service.update(updatedCampaign.id, updatedCampaign);
 
     const result = await service.update(updatedCampaign.id, updatedCampaign);
@@ -171,9 +166,9 @@ describe('CampaignService', () => {
     expect(mockRepository.findOne).toHaveBeenCalledWith({
       where: { id: updatedCampaign.id },
     });
-  
+
     expect(mockRepository.save).toHaveBeenCalledWith(updatedCampaign);
-  
+
     expect(result).toEqual(updatedCampaign);
   });
 

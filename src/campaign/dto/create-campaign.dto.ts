@@ -17,6 +17,6 @@ export class CreateCampaignDto {
   category: string;
 
   @IsNotEmpty()
-  @IsString()
+  @IsEnum(CampaignStatus)
   status: CampaignStatus;
 }

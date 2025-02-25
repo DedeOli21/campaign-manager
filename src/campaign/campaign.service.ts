@@ -1,7 +1,7 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Campaign, CampaignStatus } from './entities/campaign.entity';
+import { Campaign } from './entities/campaign.entity';
 import { UpdateCampaignDto } from './dto/update-campaign.dto';
 import { CreateCampaignDto } from './dto/create-campaign.dto';
 import { validateCampaignDates } from 'src/shared/helpers/verify-date.helper';
@@ -40,14 +40,21 @@ export class CampaignService {
     return campaign;
   }
 
-  async update(id: number, updateCampaignDto: UpdateCampaignDto): Promise<Campaign> {
+  async update(
+    id: number,
+    updateCampaignDto: UpdateCampaignDto,
+  ): Promise<Campaign> {
     const campaign = await this.findOne(id);
 
     const startDate = updateCampaignDto.startDate ?? campaign.startDate;
     const endDate = updateCampaignDto.endDate ?? campaign.endDate;
     const status = updateCampaignDto.status ?? campaign.status;
 
-    updateCampaignDto.status = validateCampaignDates(startDate, endDate, status);
+    updateCampaignDto.status = validateCampaignDates(
+      startDate,
+      endDate,
+      status,
+    );
 
     Object.assign(campaign, updateCampaignDto);
     return this.campaignRepository.save(campaign);
