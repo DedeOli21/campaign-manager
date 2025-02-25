@@ -3,6 +3,7 @@ import { CampaignService } from './campaign.service';
 import { Campaign, CampaignStatus } from './entities/campaign.entity';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { create } from 'domain';
 
 describe('CampaignService', () => {
   let service: CampaignService;
@@ -56,15 +57,21 @@ describe('CampaignService', () => {
     },
   ];
 
+  const mockRepository = {
+    save: jest.fn(),
+    find: jest.fn().mockResolvedValue(mockCampaigns),
+    findOne: jest.fn().mockResolvedValue(mockCampaigns[0]),
+    update: jest.fn(),
+    delete: jest.fn(),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         CampaignService,
         {
           provide: getRepositoryToken(Campaign),
-          useValue: {
-            find: jest.fn().mockResolvedValue(mockCampaigns),
-          },
+          useValue: mockRepository,
         },
       ],
     }).compile();
@@ -81,5 +88,24 @@ describe('CampaignService', () => {
     const campaigns = await service.findAll();
     expect(campaigns).toHaveLength(5);
     expect(campaigns).toEqual(mockCampaigns);
+  });
+
+  it('should create a campaign', async () => {
+    const newCampaign: Campaign = {
+      id: 6,
+      name: 'Campanha 6',
+      createdAt: new Date(),
+      startDate: new Date(),
+      endDate: new Date(new Date().getTime() + 1000 * 60 * 60 * 24),
+      status: CampaignStatus.ACTIVE,
+      category: 'Tecnologia',
+    };
+
+    mockRepository.save.mockResolvedValue(newCampaign);
+
+    const createdCampaign = await service.create(newCampaign);
+
+    expect(createdCampaign).toEqual(newCampaign);
+    expect(mockRepository.save).toHaveBeenCalledWith(newCampaign);
   });
 });

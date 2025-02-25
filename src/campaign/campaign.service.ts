@@ -13,4 +13,8 @@ export class CampaignService {
       async findAll(): Promise<Campaign[]> {
         return this.campaignRepository.find();
       }
+
+      async create(campaign: Campaign): Promise<Campaign> {
+        return this.campaignRepository.save(campaign);
+      }
 }
