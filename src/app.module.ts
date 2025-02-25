@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CampaignModule } from './campaign/campaign.module';
+import { CampaignModule } from './presentation/campaign/campaign.module';
 
 @Module({
   imports: [

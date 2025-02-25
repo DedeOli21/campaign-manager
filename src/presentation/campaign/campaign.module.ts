@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { CampaignService } from './campaign.service';
-import { CampaignController } from './campaign.controller';
+import { CampaignController } from '../controller/campaign.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Campaign } from './entities/campaign.entity';
+import { Campaign } from '../../domain/campaign/campaign.entity';
 
 @Module({
   providers: [CampaignService],

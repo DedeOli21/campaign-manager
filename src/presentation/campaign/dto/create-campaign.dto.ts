@@ -1,7 +1,11 @@
-import { IsDateString, IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { CampaignStatus } from '../entities/campaign.entity';
+import { IsDateString, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { CampaignStatus } from '../../../domain/campaign/campaign.entity';
 
 export class CreateCampaignDto {
+  @IsOptional()
+  @IsNumber()
+  id: number;
+
   @IsNotEmpty()
   @IsString()
   name: string;
