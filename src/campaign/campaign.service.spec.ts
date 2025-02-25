@@ -82,6 +82,44 @@ describe('CampaignService', () => {
     jest.clearAllMocks();
   });
 
+  describe('create', () => {
+    it('should create a campaign', async () => {
+      const newCampaign: Campaign = {
+        id: 6,
+        name: 'Campanha 6',
+        createdAt: new Date(),
+        startDate: new Date(),
+        endDate: new Date(new Date().getTime() + 1000 * 60 * 60 * 24),
+        status: CampaignStatus.ACTIVE,
+        category: 'Tecnologia',
+      };
+  
+      mockRepository.save.mockResolvedValue(newCampaign);
+  
+      const createdCampaign = await service.create(newCampaign);
+  
+      expect(createdCampaign).toEqual(newCampaign);
+      expect(mockRepository.save).toHaveBeenCalledWith(newCampaign);
+    })
+
+    it('if the end date is before the start date, should throw an error', async () => {
+      const newCampaign: Campaign = {
+        id: 6,
+        name: 'Campanha 6',
+        createdAt: new Date(),
+        startDate: new Date(),
+        endDate: new Date(new Date().getTime() - 1000 * 60 * 60 * 24),
+        status: CampaignStatus.ACTIVE,
+        category: 'Tecnologia',
+      };
+  
+      mockRepository.save.mockResolvedValue(newCampaign);
+  
+      await expect(service.create(newCampaign)).rejects.toThrow();
+    })
+    
+  });
+
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
@@ -92,24 +130,7 @@ describe('CampaignService', () => {
     expect(campaigns).toEqual(mockCampaigns);
   });
 
-  it('should create a campaign', async () => {
-    const newCampaign: Campaign = {
-      id: 6,
-      name: 'Campanha 6',
-      createdAt: new Date(),
-      startDate: new Date(),
-      endDate: new Date(new Date().getTime() + 1000 * 60 * 60 * 24),
-      status: CampaignStatus.ACTIVE,
-      category: 'Tecnologia',
-    };
-
-    mockRepository.save.mockResolvedValue(newCampaign);
-
-    const createdCampaign = await service.create(newCampaign);
-
-    expect(createdCampaign).toEqual(newCampaign);
-    expect(mockRepository.save).toHaveBeenCalledWith(newCampaign);
-  });
+  ;
 
   it('should update a campaign', async () => {
     const updatedCampaign: Campaign = {
