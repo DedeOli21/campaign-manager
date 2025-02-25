@@ -1,9 +1,7 @@
-import { IsDateString, IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
-import { CampaignStatus } from '../../../domain/campaign/campaign.entity';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
 export class DeleteCampaignDto {
   @IsNotEmpty()
   @IsNumber()
   id: number;
-
 }

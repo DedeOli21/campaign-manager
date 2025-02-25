@@ -1,4 +1,11 @@
-import { IsDateString, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsDateString,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { CampaignStatus } from '../../../domain/campaign/campaign.entity';
 
 export class CreateCampaignDto {
