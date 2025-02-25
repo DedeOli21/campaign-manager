@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Campaign } from './entities/campaign.entity';
 import { UpdateCampaignDto } from './dto/update-campaign.dto';
 import { CreateCampaignDto } from './dto/create-campaign.dto';
-import { validateCampaignDates } from 'src/shared/helpers/verify-date.helper';
+import { validateCampaignDates } from '../shared/helpers/verify-date.helper';
 
 @Injectable()
 export class CampaignService {
@@ -20,14 +20,15 @@ export class CampaignService {
   async create(createCampaignDto: CreateCampaignDto): Promise<Campaign> {
     const { startDate, endDate, status } = createCampaignDto;
 
+    console.log('startDate', startDate);
+    console.log('endDate', endDate);
+
     const validatedStatus = validateCampaignDates(startDate, endDate, status);
 
-    const campaign = this.campaignRepository.create({
+    return this.campaignRepository.save({
       ...createCampaignDto,
       status: validatedStatus,
     });
-
-    return this.campaignRepository.save(campaign);
   }
 
   async findOne(id: number): Promise<Campaign> {
