@@ -23,7 +23,7 @@ export class Campaign {
   @Column()
   endDate: Date;
 
-  @Column({ type: 'enum', enum: CampaignStatus, default: CampaignStatus.ACTIVE })
+  @Column({ type: 'enum', enum: CampaignStatus })
   status: CampaignStatus;
 
   @Column()

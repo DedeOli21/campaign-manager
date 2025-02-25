@@ -15,4 +15,8 @@ export class CreateCampaignDto {
   @IsNotEmpty()
   @IsString()
   category: string;
+
+  @IsNotEmpty()
+  @IsString()
+  status: string;
 }
