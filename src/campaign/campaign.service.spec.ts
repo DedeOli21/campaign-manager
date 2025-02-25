@@ -78,6 +78,8 @@ describe('CampaignService', () => {
 
     service = module.get<CampaignService>(CampaignService);
     repository = module.get<Repository<Campaign>>(getRepositoryToken(Campaign));
+
+    jest.clearAllMocks();
   });
 
   it('should be defined', () => {
@@ -107,5 +109,32 @@ describe('CampaignService', () => {
 
     expect(createdCampaign).toEqual(newCampaign);
     expect(mockRepository.save).toHaveBeenCalledWith(newCampaign);
+  });
+
+  it('should update a campaign', async () => {
+    const updatedCampaign: Campaign = {
+      id: 1,
+      name: 'Campanha 1 atualizada',
+      createdAt: new Date(),
+      startDate: new Date(),
+      endDate: new Date(new Date().getTime() + 1000 * 60 * 60 * 24),
+      status: CampaignStatus.ACTIVE,
+      category: 'Marketing',
+    };
+  
+    mockRepository.findOne.mockResolvedValue(updatedCampaign);
+    mockRepository.save.mockResolvedValue(updatedCampaign);
+  
+    await service.update(updatedCampaign.id, updatedCampaign);
+
+    const result = await service.update(updatedCampaign.id, updatedCampaign);
+
+    expect(mockRepository.findOne).toHaveBeenCalledWith({
+      where: { id: updatedCampaign.id },
+    });
+  
+    expect(mockRepository.save).toHaveBeenCalledWith(updatedCampaign);
+  
+    expect(result).toEqual(updatedCampaign);
   });
 });
