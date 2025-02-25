@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Campaign } from '../../domain/campaign/campaign.entity';
-import { UpdateCampaignDto } from '../../presentation/campaign/dto/update-campaign.dto';
-import { CreateCampaignDto } from '../../presentation/campaign/dto/create-campaign.dto';
-import { validateCampaignDates } from '../../shared/helpers/verify-date.helper';
+import { Campaign } from '../../../domain/campaign/campaign.entity';
+import { UpdateCampaignDto } from '../../../presentation/campaign/dto/update-campaign.dto';
+import { CreateCampaignDto } from '../../../presentation/campaign/dto/create-campaign.dto';
+import { validateCampaignDates } from '../../../shared/helpers/verify-date.helper';
 
 @Injectable()
 export class CampaignService {

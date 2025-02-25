@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateCampaignUseCase } from '@app/campaign/create-campaign.use-case';
-import { DeleteCampaignUseCase } from '@app/campaign/delete-campaign.use-case';
-import { FindCampaignUseCase } from '@app/campaign/find-campaign.use-case';
-import { FindAllCampaignUseCase } from '@app/campaign/findAll-campaign.use-case';
-import { UpdateCampaignUseCase } from '@app/campaign/update-campaign.use-case';
+import { CreateCampaignUseCase } from '@app/usecases/campaign/create-campaign.use-case';
+import { DeleteCampaignUseCase } from '@app/usecases/campaign/delete-campaign.use-case';
+import { FindCampaignUseCase } from '@app/usecases/campaign/find-campaign.use-case';
+import { FindAllCampaignUseCase } from '@app/usecases/campaign/findAll-campaign.use-case';
+import { UpdateCampaignUseCase } from '@app/usecases/campaign/update-campaign.use-case';
 import { Campaign, CampaignStatus } from '@domain/campaign/campaign.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
