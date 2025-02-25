@@ -117,6 +117,24 @@ describe('CampaignService', () => {
   
       await expect(service.create(newCampaign)).rejects.toThrow();
     })
+
+    it('if the end date for less than date now, should be status expired', async () => {
+      const newCampaign: Campaign = {
+        id: 6,
+        name: 'Campanha 6',
+        createdAt: new Date(),
+        startDate: new Date(),
+        endDate: new Date(new Date().getTime() - 1000 * 60 * 60 * 24),
+        status: CampaignStatus.ACTIVE,
+        category: 'Tecnologia',
+      };
+  
+      mockRepository.save.mockResolvedValue(newCampaign);
+  
+      const createdCampaign = await service.create(newCampaign);
+  
+      expect(createdCampaign.status).toEqual(CampaignStatus.EXPIRED);
+    });
     
   });
 

@@ -18,5 +18,5 @@ export class CreateCampaignDto {
 
   @IsNotEmpty()
   @IsString()
-  status: string;
+  status: CampaignStatus;
 }
