@@ -1,4 +1,4 @@
-import { Campaign } from '@domain/campaign/campaign.entity';
+import { Campaign } from '@domain/entities/campaign.entity';
 import { CreateCampaignDto } from '@presentation/campaign/dto/create-campaign.dto';
 import { DeleteCampaignDto } from '@presentation/campaign/dto/delete-campaign.dto';
 import { FindCampaignDto } from '@presentation/campaign/dto/find-campaign.dto';

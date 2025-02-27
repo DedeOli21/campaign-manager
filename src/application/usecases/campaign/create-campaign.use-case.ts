@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CampaignRepository } from '@domain/repositories/campaign.repository';
 import { CreateCampaignDto } from '@presentation/campaign/dto/create-campaign.dto';
-import { Campaign } from '@domain/campaign/campaign.entity';
+import { Campaign } from '@domain/entities/campaign.entity';
 import { validateCampaignDates } from '@shared/helpers/verify-date.helper';
 
 @Injectable()

@@ -1,4 +1,4 @@
-import { Campaign } from '@domain/campaign/campaign.entity';
+import { Campaign } from '@domain/entities/campaign.entity';
 import { CampaignRepository } from '@domain/repositories/campaign.repository';
 import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';

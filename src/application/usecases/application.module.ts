@@ -7,4 +7,4 @@ const usecases = [CampaignModule];
   imports: usecases,
   exports: usecases,
 })
-export class DomainModule {}
+export class ApplicationModule {}

@@ -3,7 +3,7 @@ import { CreateCampaignDto } from '@presentation/campaign/dto/create-campaign.dt
 import { DeleteCampaignDto } from '@presentation/campaign/dto/delete-campaign.dto';
 import { FindCampaignDto } from '@presentation/campaign/dto/find-campaign.dto';
 import { UpdateCampaignDto } from '@presentation/campaign/dto/update-campaign.dto';
-import { Campaign } from '@domain/campaign/campaign.entity';
+import { Campaign } from '@domain/entities/campaign.entity';
 import { CampaignRepository } from '@domain/repositories/campaign.repository';
 import { validateCampaignDates } from '@shared/helpers/verify-date.helper';
 import { Repository } from 'typeorm';

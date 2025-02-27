@@ -6,7 +6,7 @@ import { ListCampaignUseCase } from '@app/usecases/campaign/list-campaign.use-ca
 import { UpdateCampaignUseCase } from '@app/usecases/campaign/update-campaign.use-case';
 import { CampaignController } from '@presentation/controller/campaign.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Campaign } from '@domain/campaign/campaign.entity';
+import { Campaign } from '@domain/entities/campaign.entity';
 
 @Module({
   providers: [],

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CampaignRepository } from '@domain/repositories/campaign.repository';
 import { FindCampaignDto } from '@presentation/campaign/dto/find-campaign.dto';
-import { Campaign } from '@domain/campaign/campaign.entity';
+import { Campaign } from '@domain/entities/campaign.entity';
 
 @Injectable()
 export class FindCampaignUseCase {

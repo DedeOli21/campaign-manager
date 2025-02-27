@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { isBefore, startOfDay, toDate } from 'date-fns';
-import { CampaignStatus } from '@domain/campaign/campaign.entity';
+import { CampaignStatus } from '@domain/entities/campaign.entity';
 
 export function validateCampaignDates(
   startDate: Date,
