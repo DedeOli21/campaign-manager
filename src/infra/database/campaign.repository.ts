@@ -14,7 +14,9 @@ export class CampaignImpl implements CampaignRepository {
     private readonly campaignRepository: Repository<Campaign>,
   ) {}
 
-  async createCampaign(createCampaignDto: CreateCampaignDto): Promise<Campaign> {
+  async createCampaign(
+    createCampaignDto: CreateCampaignDto,
+  ): Promise<Campaign> {
     try {
       const campaing = this.campaignRepository.create(createCampaignDto);
 
@@ -28,44 +30,45 @@ export class CampaignImpl implements CampaignRepository {
     }
   }
 
-  // implements delete with soft delete
   async deleteCampaign(deleteCampaignDto: DeleteCampaignDto): Promise<object> {
-
     const campaign = await this.findCampaign({ id: deleteCampaignDto.id });
     await this.campaignRepository.softDelete(campaign.id);
 
-    return { message: `Campaign with ID ${deleteCampaignDto.id} successfully deleted.` };
+    return {
+      message: `Campaign with ID ${deleteCampaignDto.id} successfully deleted.`,
+    };
   }
 
   async findCampaign(findCampaignDto: FindCampaignDto): Promise<Campaign> {
     return await this.campaignRepository.findOneBy({ id: findCampaignDto.id });
   }
 
-  async updateCampaign(updateCampaignDto: UpdateCampaignDto): Promise<Campaign> {
-
+  async updateCampaign(
+    updateCampaignDto: UpdateCampaignDto,
+  ): Promise<Campaign> {
     try {
       const campaign = await this.findCampaign({ id: updateCampaignDto.id });
 
-    if (!campaign) {
-      throw new Error('Campaign not found');
-    }
+      if (!campaign) {
+        throw new Error('Campaign not found');
+      }
 
-    console.log('updateCampaignDto', updateCampaignDto);
-    console.log('campaign', campaign);
+      console.log('updateCampaignDto', updateCampaignDto);
+      console.log('campaign', campaign);
 
-    const startDate = updateCampaignDto.startDate ?? campaign.startDate;
-    const endDate = updateCampaignDto.endDate ?? campaign.endDate;
-    const status = updateCampaignDto.status ?? campaign.status;
+      const startDate = updateCampaignDto.startDate ?? campaign.startDate;
+      const endDate = updateCampaignDto.endDate ?? campaign.endDate;
+      const status = updateCampaignDto.status ?? campaign.status;
 
-    updateCampaignDto.status = validateCampaignDates(
-      startDate,
-      endDate,
-      status,
-    );
+      updateCampaignDto.status = validateCampaignDates(
+        startDate,
+        endDate,
+        status,
+      );
 
-    Object.assign(campaign, updateCampaignDto);
+      Object.assign(campaign, updateCampaignDto);
 
-    return this.campaignRepository.save(campaign);
+      return this.campaignRepository.save(campaign);
     } catch (error) {
       throw new Error(error);
     }

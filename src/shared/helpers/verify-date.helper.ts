@@ -8,25 +8,24 @@ export function validateCampaignDates(
   status?: CampaignStatus,
 ): CampaignStatus {
   const today = startOfDay(new Date());
-  const start = toDate(startDate);
-  const end = toDate(endDate);
+  const start = startOfDay(toDate(startDate));
+  const end = startOfDay(toDate(endDate));
 
-  if (isBefore(startDate, today)) {
+  if (isBefore(start, today)) {
     throw new BadRequestException(
       'A data de início deve ser igual ou posterior à data atual.',
     );
   }
 
-  if (isBefore(endDate, today)) {
-    console.log('EXPIRED');
+  if (isBefore(end, today)) {
     return CampaignStatus.EXPIRED;
   }
 
-  if (isBefore(endDate, startDate)) {
+  if (isBefore(end, start)) {
     throw new BadRequestException(
       'A data final deve ser maior que a data inicial.',
     );
   }
 
-  return status ? status : CampaignStatus.ACTIVE;
+  return status ?? CampaignStatus.ACTIVE;
 }

@@ -6,7 +6,11 @@ import { DeleteCampaignDto } from '@presentation/campaign/dto/delete-campaign.dt
 export class DeleteCampaignUseCase {
   constructor(private readonly campaingRepository: CampaignRepository) {}
 
-  async call(createCampaignDto: DeleteCampaignDto): Promise<any> {
-    return await this.campaingRepository.deleteCampaign(createCampaignDto.id);
+  async call(deleteCampaignDto: DeleteCampaignDto): Promise<any> {
+    try {
+      return await this.campaingRepository.deleteCampaign(deleteCampaignDto);
+    } catch (error) {
+      throw new error();
+    }
   }
 }

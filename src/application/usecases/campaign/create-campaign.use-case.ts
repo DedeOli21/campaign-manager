@@ -13,15 +13,17 @@ export class CreateCampaignUseCase {
       const statusValid = validateCampaignDates(
         createCampaignDto.startDate,
         createCampaignDto.endDate,
-      )
+      );
 
       console.log('statusValid', statusValid);
       console.log('createCampaignDto', createCampaignDto);
 
-      return await this.campaingRepository.createCampaign({ status: statusValid, ...createCampaignDto });
+      return await this.campaingRepository.createCampaign({
+        ...createCampaignDto,
+        status: statusValid,
+      });
     } catch (error) {
       throw new Error(error);
     }
-
   }
 }

@@ -3,6 +3,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   CreateDateColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 
 export enum CampaignStatus {
@@ -22,11 +23,14 @@ export class Campaign {
   @CreateDateColumn()
   createdAt: Date;
 
+  @DeleteDateColumn()
+  deleteadAt?: Date | null;
+
   @Column()
   startDate: Date;
 
   @Column()
-  endDate: Date;
+  endDate?: Date;
 
   @Column({ type: 'enum', enum: CampaignStatus })
   status: CampaignStatus;

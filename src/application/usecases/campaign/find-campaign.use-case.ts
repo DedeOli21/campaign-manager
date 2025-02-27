@@ -10,8 +10,7 @@ export class FindCampaignUseCase {
   async call(createCampaignDto: FindCampaignDto): Promise<Campaign> {
     try {
       return await this.campaingRepository.findCampaign(createCampaignDto);
-    }
-    catch (error) {
+    } catch (error) {
       throw new Error(error);
     }
   }

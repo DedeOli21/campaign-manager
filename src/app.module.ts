@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CampaignModule } from './presentation/campaign/campaign.module';
 import { DomainModule } from '@app/usecases/domain.module';
 import { DatabaseModule } from './infra/database/database.module';
 import { DataBaseConnectionService } from '@shared/databases/campaing';
@@ -15,7 +14,7 @@ import { PresentationModule } from '@presentation/presentation.module';
     ConfigModule.forRoot({ isGlobal: true }),
     DomainModule,
     PresentationModule,
-    DatabaseModule
+    DatabaseModule,
   ],
 })
 export class AppModule {}
