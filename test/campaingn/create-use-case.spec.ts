@@ -60,12 +60,12 @@ describe('createCampaign', () => {
 
     expect(createdCampaign).toEqual({
       ...dto,
-      status: CampaignStatus.ACTIVE, // Deve estar preenchido corretamente
+      status: CampaignStatus.ACTIVE,
     });
 
     expect(mockRepository.createCampaign).toHaveBeenCalledWith({
       ...dto,
-      status: CampaignStatus.ACTIVE, // Verificando se foi criado corretamente
+      status: CampaignStatus.ACTIVE,
     });
   });
 

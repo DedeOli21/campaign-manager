@@ -22,7 +22,7 @@ describe('findCampaign', () => {
   const mockRepository = {
     findCampaign: jest.fn(({ id }) => {
       const campaign = mockDto().find((c) => c.id === id);
-      return campaign ?? null; // Retorna null se não encontrar
+      return campaign ?? null;
     }),
   };
 
