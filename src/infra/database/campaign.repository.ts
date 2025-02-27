@@ -8,7 +8,7 @@ import { CampaignRepository } from '@domain/repositories/campaign.repository';
 import { validateCampaignDates } from '@shared/helpers/verify-date.helper';
 import { Repository } from 'typeorm';
 
-export class CampaignImpl implements CampaignRepository {
+export class CampaignImplementation implements CampaignRepository {
   constructor(
     @InjectRepository(Campaign)
     private readonly campaignRepository: Repository<Campaign>,
