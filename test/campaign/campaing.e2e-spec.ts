@@ -1,25 +1,25 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
-import { CampaignModule } from '@app/usecases/campaign/campaign.module';
 import { CampaignStatus } from '@domain/campaign/campaign.entity';
+import { setupDataSource } from './setup';
+import { AppModule } from '../../src/app.module';
+import { DataSource } from 'typeorm';
 
 describe('Campaign API Integration Tests', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
+    const datasource = await setupDataSource();
+
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [CampaignModule],
-    }).compile();
+      imports: [AppModule]
+    })
+    .overrideProvider(DataSource)
+    .useValue(datasource)
+    .compile();
 
     app = moduleFixture.createNestApplication();
-
-    app.useGlobalPipes(
-      new ValidationPipe({
-        whitelist: true,
-        forbidNonWhitelisted: true,
-      }),
-    );
 
     await app.init();
   });
