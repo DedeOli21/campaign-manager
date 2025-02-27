@@ -3,9 +3,9 @@ import { CreateCampaignDto } from '@presentation/campaign/dto/create-campaign.dt
 import { DeleteCampaignDto } from '@presentation/campaign/dto/delete-campaign.dto';
 import { FindCampaignDto } from '@presentation/campaign/dto/find-campaign.dto';
 import { UpdateCampaignDto } from '@presentation/campaign/dto/update-campaign.dto';
-import { Campaign } from 'src/domain/campaign/campaign.entity';
-import { CampaignRepository } from 'src/domain/repositories/campaign.repository';
-import { validateCampaignDates } from 'src/shared/helpers/verify-date.helper';
+import { Campaign } from '@domain/campaign/campaign.entity';
+import { CampaignRepository } from '@domain/repositories/campaign.repository';
+import { validateCampaignDates } from '@shared/helpers/verify-date.helper';
 import { Repository } from 'typeorm';
 
 export class CampaignImpl implements CampaignRepository {

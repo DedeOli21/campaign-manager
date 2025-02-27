@@ -20,6 +20,7 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@app/*": ["src/application/*"],
+      "@infra/*": ["src/infra/*"],
       "@config/*": ["src/config/*"],
       "@domain/*": ["src/domain/*"],
       "@db/*": ["src/db/*"],

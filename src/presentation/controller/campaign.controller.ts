@@ -8,52 +8,94 @@ import {
   Param,
   HttpStatus,
 } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { CreateCampaignUseCase } from '@app/usecases/campaign/create-campaign.use-case';
 import { UpdateCampaignDto } from '@presentation/campaign/dto/update-campaign.dto';
 import { CreateCampaignDto } from '@presentation/campaign/dto/create-campaign.dto';
-import { FindAllCampaignUseCase } from '@app/usecases/campaign/list-campaign.use-case';
+import { ListCampaignUseCase } from '@app/usecases/campaign/list-campaign.use-case';
 import { FindCampaignUseCase } from '@app/usecases/campaign/find-campaign.use-case';
 import { UpdateCampaignUseCase } from '@app/usecases/campaign/update-campaign.use-case';
 import { DeleteCampaignUseCase } from '@app/usecases/campaign/delete-campaign.use-case';
-import { ApiResponse } from '@nestjs/swagger';
 import { NotFoundSwagger } from '@shared/swagger/not-found.swagger';
 import { InternalServerError } from '@shared/swagger/internal-server-error.swagger';
 
+@ApiTags('Campaigns')
 @Controller('campaigns')
 export class CampaignController {
   constructor(
     private readonly createCampaign: CreateCampaignUseCase,
-    private readonly findAllCampaign: FindAllCampaignUseCase,
+    private readonly findAllCampaign: ListCampaignUseCase,
     private readonly findCampaign: FindCampaignUseCase,
     private readonly deleteCampaign: DeleteCampaignUseCase,
     private readonly updateCampaign: UpdateCampaignUseCase,
   ) {}
 
   @Post()
+  @ApiOperation({ summary: 'Cria uma nova campanha' })
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: 'Campanha criada com sucesso.',
+  })
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: 'Erro interno do servidor',
+    type: InternalServerError,
+  })
   create(@Body() createCampaignDto: CreateCampaignDto) {
     return this.createCampaign.call(createCampaignDto);
   }
 
   @Get()
+  @ApiOperation({ summary: 'Lista todas as campanhas' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Lista de campanhas retornada com sucesso.',
+  })
   findAll() {
     return this.findAllCampaign.call();
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Obtém uma campanha pelo ID' })
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'ID da campanha',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Campanha encontrada com sucesso.',
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Campanha não encontrada.',
+    type: NotFoundSwagger,
+  })
   findOne(@Param('id') id: number) {
     return this.findCampaign.call({ id });
   }
 
+  @Put(':id')
+  @ApiOperation({ summary: 'Atualiza uma campanha existente' })
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'ID da campanha a ser atualizada',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Campanha atualizada com sucesso.',
+  })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: 'Campaing not found',
+    description: 'Campanha não encontrada.',
     type: NotFoundSwagger,
   })
   @ApiResponse({
     status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: 'Erro interno do servidor.',
     type: InternalServerError,
   })
-  @Put(':id')
   update(
     @Param('id') id: number,
     @Body() updateCampaignDto: UpdateCampaignDto,
@@ -62,6 +104,21 @@ export class CampaignController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Remove (soft delete) uma campanha' })
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'ID da campanha a ser removida',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Campanha removida com sucesso.',
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Campanha não encontrada.',
+    type: NotFoundSwagger,
+  })
   softDelete(@Param('id') id: number) {
     return this.deleteCampaign.call({ id });
   }

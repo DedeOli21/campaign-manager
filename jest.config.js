@@ -15,5 +15,5 @@ module.exports = {
         "tsconfig": "tsconfig.jest.json"
       }
     }
-  };
+};
   
