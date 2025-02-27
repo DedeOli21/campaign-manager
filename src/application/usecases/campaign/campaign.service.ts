@@ -20,9 +20,6 @@ export class CampaignService {
   async create(createCampaignDto: CreateCampaignDto): Promise<Campaign> {
     const { startDate, endDate, status } = createCampaignDto;
 
-    console.log('startDate', startDate);
-    console.log('endDate', endDate);
-
     const validatedStatus = validateCampaignDates(startDate, endDate, status);
 
     return this.campaignRepository.save({

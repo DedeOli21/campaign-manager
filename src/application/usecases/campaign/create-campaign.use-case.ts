@@ -15,9 +15,6 @@ export class CreateCampaignUseCase {
         createCampaignDto.endDate,
       );
 
-      console.log('statusValid', statusValid);
-      console.log('createCampaignDto', createCampaignDto);
-
       return await this.campaingRepository.createCampaign({
         ...createCampaignDto,
         status: statusValid,

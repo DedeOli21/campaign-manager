@@ -53,9 +53,6 @@ export class CampaignImpl implements CampaignRepository {
         throw new Error('Campaign not found');
       }
 
-      console.log('updateCampaignDto', updateCampaignDto);
-      console.log('campaign', campaign);
-
       const startDate = updateCampaignDto.startDate ?? campaign.startDate;
       const endDate = updateCampaignDto.endDate ?? campaign.endDate;
       const status = updateCampaignDto.status ?? campaign.status;
