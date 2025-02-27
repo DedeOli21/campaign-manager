@@ -11,7 +11,7 @@ import { CampaignStatus } from '../../../domain/campaign/campaign.entity';
 export class CreateCampaignDto {
   @IsOptional()
   @IsNumber()
-  id: number;
+  id?: number;
 
   @IsNotEmpty()
   @IsString()

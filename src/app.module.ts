@@ -5,6 +5,7 @@ import { DomainModule } from '@app/usecases/domain.module';
 import { DatabaseModule } from './infra/database/database.module';
 import { DataBaseConnectionService } from '@shared/databases/campaing';
 import { ConfigModule } from '@nestjs/config';
+import { PresentationModule } from '@presentation/presentation.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { ConfigModule } from '@nestjs/config';
     }),
     ConfigModule.forRoot({ isGlobal: true }),
     DomainModule,
+    PresentationModule,
     DatabaseModule
   ],
 })

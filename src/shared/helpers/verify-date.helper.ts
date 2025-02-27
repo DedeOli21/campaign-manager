@@ -11,10 +11,6 @@ export function validateCampaignDates(
   const start = toDate(startDate);
   const end = toDate(endDate);
 
-  console.log('startDate', start);
-  console.log('endDate', end);
-  console.log(today);
-
   if (isBefore(startDate, today)) {
     throw new BadRequestException(
       'A data de início deve ser igual ou posterior à data atual.',

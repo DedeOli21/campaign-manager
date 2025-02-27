@@ -6,10 +6,11 @@ import { UpdateCampaignDto } from '@presentation/campaign/dto/update-campaign.dt
 export class UpdateCampaignUseCase {
   constructor(private readonly campaingRepository: CampaignRepository) {}
 
-  async call(createCampaignDto: UpdateCampaignDto): Promise<any> {
-    return await this.campaingRepository.updateCampaign(
-      createCampaignDto.id,
-      createCampaignDto,
-    );
+  async call(updateCampaignDto: UpdateCampaignDto): Promise<any> {
+    try {
+      return await this.campaingRepository.updateCampaign(updateCampaignDto);
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 }

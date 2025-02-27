@@ -6,6 +6,7 @@ import {
   Delete,
   Body,
   Param,
+  HttpStatus,
 } from '@nestjs/common';
 import { CreateCampaignUseCase } from '@app/usecases/campaign/create-campaign.use-case';
 import { UpdateCampaignDto } from '@presentation/campaign/dto/update-campaign.dto';
@@ -14,6 +15,9 @@ import { FindAllCampaignUseCase } from '@app/usecases/campaign/findAll-campaign.
 import { FindCampaignUseCase } from '@app/usecases/campaign/find-campaign.use-case';
 import { UpdateCampaignUseCase } from '@app/usecases/campaign/update-campaign.use-case';
 import { DeleteCampaignUseCase } from '@app/usecases/campaign/delete-campaign.use-case';
+import { ApiResponse } from '@nestjs/swagger';
+import { NotFoundSwagger } from '@shared/swagger/not-found.swagger';
+import { InternalServerError } from '@shared/swagger/internal-server-error.swagger';
 
 @Controller('campaigns')
 export class CampaignController {
@@ -40,6 +44,15 @@ export class CampaignController {
     return this.findCampaign.call({ id });
   }
 
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Campaing not found',
+    type: NotFoundSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    type: InternalServerError,
+  })
   @Put(':id')
   update(
     @Param('id') id: number,
