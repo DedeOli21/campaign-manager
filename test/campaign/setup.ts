@@ -30,7 +30,10 @@ export const setupDataSource = async () => {
 
   const ds: DataSource = await db.adapters.createTypeormDataSource(config);
   await ds.initialize();
-  console.log('Entidades carregadas:', ds.entityMetadatas.map(e => e.name));
+  console.log(
+    'Entidades carregadas:',
+    ds.entityMetadatas.map((e) => e.name),
+  );
   await ds.synchronize();
 
   return ds;

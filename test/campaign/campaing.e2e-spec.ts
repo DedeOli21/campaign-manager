@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { CampaignStatus } from '@domain/campaign/campaign.entity';
 import { setupDataSource } from './setup';
@@ -13,11 +13,11 @@ describe('Campaign API Integration Tests', () => {
     const datasource = await setupDataSource();
 
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule]
+      imports: [AppModule],
     })
-    .overrideProvider(DataSource)
-    .useValue(datasource)
-    .compile();
+      .overrideProvider(DataSource)
+      .useValue(datasource)
+      .compile();
 
     app = moduleFixture.createNestApplication();
 
@@ -33,7 +33,7 @@ describe('Campaign API Integration Tests', () => {
       name: 'Nova Campanha',
       startDate: '2026-02-28T00:00:00.000Z',
       endDate: '2026-03-28T00:00:00.000Z',
-      category: 'Tecnologia'
+      category: 'Tecnologia',
     };
 
     const response = await request(app.getHttpServer())
