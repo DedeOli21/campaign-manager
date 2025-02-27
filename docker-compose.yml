@@ -14,5 +14,17 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  app:
+    build: .
+    container_name: campaign-app
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgres://user:password@postgres:5432/campaigns_db
+    command: ["node", "dist/main.js"]
+
 volumes:
   pgdata:
