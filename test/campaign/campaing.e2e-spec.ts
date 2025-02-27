@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { CampaignStatus } from '@domain/entities/campaign.entity';
+import { CampaignStatus } from '@shared/const/status-campaign';
 import { setupDataSource } from './setup';
 import { AppModule } from '../../src/app.module';
 import { DataSource } from 'typeorm';

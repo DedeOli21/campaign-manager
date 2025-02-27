@@ -6,7 +6,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { CampaignStatus } from '../../../domain/entities/campaign.entity';
+import { CampaignStatus } from '@shared/const/status-campaign';
 
 export class CreateCampaignDto {
   @IsOptional()

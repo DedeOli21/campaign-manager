@@ -5,7 +5,7 @@ Este é o backend de um sistema para gerenciar campanhas publicitárias, desenvo
 ## 📋 **Requisitos**
 Antes de começar, certifique-se de ter instalado:
 - **Node.js** (versão 16 ou superior)
-- **Yarn** (ou npm, caso prefira)
+- **Yarn**
 - **Docker e Docker Compose** (para rodar o banco de dados PostgreSQL)
 
 ---
@@ -13,7 +13,7 @@ Antes de começar, certifique-se de ter instalado:
 ## 🔧 **Instalação**
 1. Clone o repositório:
    ```sh
-   git clone https://github.com/seu-usuario/nome-do-repositorio.git
+   git clone https://github.com/DedeOli21/campaign-manager.git
 
 
 2. Acesse a pasta do projeto:

@@ -1,3 +1,4 @@
+import { CampaignStatus } from '@shared/const/status-campaign';
 import {
   Column,
   Entity,
@@ -5,12 +6,6 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
 } from 'typeorm';
-
-export enum CampaignStatus {
-  ACTIVE = 'ativa',
-  PAUSED = 'pausada',
-  EXPIRED = 'expirada',
-}
 
 @Entity()
 export class Campaign {

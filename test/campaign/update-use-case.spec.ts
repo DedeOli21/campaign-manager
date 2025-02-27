@@ -1,5 +1,5 @@
 import { UpdateCampaignUseCase } from '@app/usecases/campaign/update-campaign.use-case';
-import { CampaignStatus } from '@domain/entities/campaign.entity';
+import { CampaignStatus } from '@shared/const/status-campaign';
 import { CampaignRepository } from '@domain/repositories/campaign.repository';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UpdateCampaignDto } from '@presentation/campaign/dto/update-campaign.dto';
