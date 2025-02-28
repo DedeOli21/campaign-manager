@@ -1,4 +1,4 @@
-FROM node:18-alpine AS builder
+FROM node:23-alpine AS builder
 
 WORKDIR /app
 
@@ -8,18 +8,16 @@ RUN yarn install
 
 COPY . .
 
-RUN yarn build
+RUN yarn build && ls -la /app/dist
 
-FROM node:18-alpine
+RUN echo "Build completed" && ls -la /app
+
+FROM node:23-alpine
 
 WORKDIR /app
-
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 COPY package.json ./
-
 ENV NODE_ENV=production
-
 EXPOSE 3000
-
-CMD ["node", "dist/main.js"]
+CMD ["node", "./dist/src/main.js"]

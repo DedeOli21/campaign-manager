@@ -24,6 +24,16 @@ services:
       - "3000:3000"
     environment:
       DATABASE_URL: postgres://user:password@postgres:5432/campaigns_db
+      TYPEORM_HOST: localhost
+      TYPEORM_PORT: 5432
+      TYPEORM_USERNAME: user
+      TYPEORM_PASSWORD: password
+      TYPEORM_DATABASE: campaigns_db
+      TYPEORM_SYNCHRONIZE: true
+      TYPEORM_LOGGING: true
+      TYPEORM_AUTO_LOAD_ENTITIES: true
+      TYPEORM_ENTITIES: dist/**/*.entity.js
+      TYPEORM_MIGRATIONS: dist/**/migrations/*.js
     command: ["node", "dist/main.js"]
 
 volumes:
