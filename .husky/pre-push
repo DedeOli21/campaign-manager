@@ -1,0 +1,11 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "🔍 Running TypeScript type-check..."
+yarn tsc --noEmit
+
+echo "🔍 Running ESLint..."
+yarn lint --fix
+
+echo "🧪 Running Tests..."
+yarn test
