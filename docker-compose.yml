@@ -9,32 +9,34 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: campaign-manager
       POSTGRES_DB: campaigns_db
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d campaigns_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   app:
     build: .
     container_name: campaign-app
     restart: always
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: postgres://user:password@postgres:5432/campaigns_db
-      TYPEORM_HOST: localhost
-      TYPEORM_PORT: 5432
-      TYPEORM_USERNAME: user
-      TYPEORM_PASSWORD: password
-      TYPEORM_DATABASE: campaigns_db
+      DATABASE_URL: postgresql://user:password@postgres:5432/campaigns_db
+      NODE_ENV: production
       TYPEORM_SYNCHRONIZE: true
       TYPEORM_LOGGING: true
       TYPEORM_AUTO_LOAD_ENTITIES: true
       TYPEORM_ENTITIES: dist/**/*.entity.js
       TYPEORM_MIGRATIONS: dist/**/migrations/*.js
-    command: ["node", "dist/main.js"]
+    command: ["node", "dist/src/main.js"]
 
 volumes:
   pgdata:
