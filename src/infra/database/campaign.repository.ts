@@ -7,6 +7,7 @@ import { Campaign } from '@domain/entities/campaign.entity';
 import { CampaignRepository } from '@domain/repositories/campaign.repository';
 import { validateCampaignDates } from '@shared/helpers/verify-date.helper';
 import { Repository } from 'typeorm';
+import { ResponseDeleteDto } from '@infra/dto/response-delete.dto';
 
 export class CampaignImplementation implements CampaignRepository {
   constructor(
@@ -30,7 +31,7 @@ export class CampaignImplementation implements CampaignRepository {
     }
   }
 
-  async deleteCampaign(deleteCampaignDto: DeleteCampaignDto): Promise<object> {
+  async deleteCampaign(deleteCampaignDto: DeleteCampaignDto): Promise<ResponseDeleteDto> {
     const campaign = await this.findCampaign({ id: deleteCampaignDto.id });
     await this.campaignRepository.softDelete(campaign.id);
 
@@ -47,25 +48,7 @@ export class CampaignImplementation implements CampaignRepository {
     updateCampaignDto: UpdateCampaignDto,
   ): Promise<Campaign> {
     try {
-      const campaign = await this.findCampaign({ id: updateCampaignDto.id });
-
-      if (!campaign) {
-        throw new Error('Campaign not found');
-      }
-
-      const startDate = updateCampaignDto.startDate ?? campaign.startDate;
-      const endDate = updateCampaignDto.endDate ?? campaign.endDate;
-      const status = updateCampaignDto.status ?? campaign.status;
-
-      updateCampaignDto.status = validateCampaignDates(
-        startDate,
-        endDate,
-        status,
-      );
-
-      Object.assign(campaign, updateCampaignDto);
-
-      return this.campaignRepository.save(campaign);
+      return this.campaignRepository.save(updateCampaignDto);
     } catch (error) {
       throw new Error(error);
     }

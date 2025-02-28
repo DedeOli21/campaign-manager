@@ -42,6 +42,7 @@ describe('createCampaign', () => {
 
   it('should be defined', () => {
     expect(createCampaignUseCase).toBeDefined();
+    expect(createCampaignUseCase).toBeInstanceOf(CreateCampaignUseCase);
   });
 
   it('should create a campaign', async () => {

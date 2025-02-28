@@ -9,8 +9,8 @@ const mockDto = (props?: Partial<UpdateCampaignDto>) => {
     id: 1,
     name: 'Campanha 6',
     createdAt: new Date('2025-02-27'),
-    startDate: new Date('2025-02-27'),
-    endDate: new Date('2025-02-28'),
+    startDate: new Date('2025-06-27'),
+    endDate: new Date('2025-06-28'),
     status: CampaignStatus.ACTIVE,
     category: 'Tecnologia',
     ...props,
@@ -20,6 +20,7 @@ const mockDto = (props?: Partial<UpdateCampaignDto>) => {
 describe('updateCampaign', () => {
   const mockRepository: Partial<CampaignRepository> = {
     updateCampaign: jest.fn().mockResolvedValue(mockDto()),
+    findCampaign: jest.fn().mockResolvedValue(mockDto()),
   };
 
   let updateCampaignUseCase: UpdateCampaignUseCase;
@@ -72,6 +73,14 @@ describe('updateCampaign', () => {
     const error = new Error('Error updating campaign');
 
     mockRepository.updateCampaign = jest.fn().mockRejectedValue(error);
+
+    await expect(updateCampaignUseCase.call(dto)).rejects.toThrow();
+  });
+
+  it('should throw an error when dont find campaing', async () => {
+    const dto = mockDto();
+
+    mockRepository.findCampaign = jest.fn().mockResolvedValueOnce(null);
 
     await expect(updateCampaignUseCase.call(dto)).rejects.toThrow();
   });
