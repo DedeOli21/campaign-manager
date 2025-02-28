@@ -17,6 +17,7 @@ export class DataBaseConnectionService implements TypeOrmOptionsFactory {
       password: this.configService.get<string>('TYPEORM_PASSWORD'),
       database: this.configService.get<string>('TYPEORM_DATABASE'),
       entities: [this.configService.get<string>('TYPEORM_ENTITIES')],
+      synchronize: this.configService.get<boolean>('TYPEORM_SYNCHRONIZE'),
     };
   }
 }

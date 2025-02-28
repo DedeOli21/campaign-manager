@@ -8,7 +8,21 @@ import { DatabaseModule } from '@infra/database/database.module';
 import { LoggerModule } from 'nestjs-pino';
 
 @Module({
-  imports: [DatabaseModule, LoggerModule.forRoot()],
+  imports: [
+    DatabaseModule,
+    LoggerModule.forRoot({
+      pinoHttp: {
+        transport: {
+          target: 'pino-pretty',
+          options: {
+            colorize: true,
+            translateTime: 'yyyy-MM-dd HH:mm:ss',
+            ignore: 'pid,hostname',
+          },
+        },
+      },
+    }),
+  ],
   providers: [
     CreateCampaignUseCase,
     FindCampaignUseCase,

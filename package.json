@@ -23,7 +23,9 @@
     "prepush": "yarn typecheck && yarn lint --fix && yarn test"
   },
   "lint-staged": {
-    "**/*.ts": [ "yarn lint --fix" ]
+    "**/*.ts": [
+      "yarn lint --fix"
+    ]
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -39,6 +41,7 @@
     "nestjs-pino": "^4.3.1",
     "pg": "^8.13.3",
     "pino-http": "^10.4.0",
+    "pino-pretty": "^13.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
     "swagger-ui-express": "^5.0.1",

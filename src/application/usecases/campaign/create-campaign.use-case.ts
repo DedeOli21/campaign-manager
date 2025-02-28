@@ -3,7 +3,7 @@ import { CampaignRepository } from '@domain/repositories/campaign.repository';
 import { CreateCampaignDto } from '@presentation/campaign/dto/create-campaign.dto';
 import { Campaign } from '@domain/entities/campaign.entity';
 import { validateCampaignDates } from '@shared/helpers/verify-date.helper';
-import { InjectPinoLogger, Logger } from 'nestjs-pino';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 @Injectable()
 export class CreateCampaignUseCase {
@@ -11,19 +11,21 @@ export class CreateCampaignUseCase {
     private readonly campaingRepository: CampaignRepository,
 
     @InjectPinoLogger(CreateCampaignUseCase.name)
-    private readonly logger: Logger,
-  ) {}
+    private readonly logger: PinoLogger,
+  ) {
+    this.logger.setContext(CreateCampaignUseCase.name);
+  }
 
   async call(createCampaignDto: CreateCampaignDto): Promise<Campaign> {
     try {
-      this.logger.log('CreateCampaignUseCase START');
+      this.logger.info('CreateCampaignUseCase START');
 
       const statusValid = validateCampaignDates(
         createCampaignDto.startDate,
         createCampaignDto.endDate,
       );
 
-      this.logger.log('CreateCampaignUseCase statusValid', statusValid);
+      this.logger.info('CreateCampaignUseCase statusValid', statusValid);
 
       return await this.campaingRepository.createCampaign({
         ...createCampaignDto,

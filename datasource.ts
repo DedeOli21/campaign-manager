@@ -2,7 +2,6 @@ import { Campaign } from '@domain/entities/campaign.entity';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-require('dotenv').config();
 
 let config: TypeOrmModuleOptions & PostgresConnectionOptions = {
   type: 'postgres',
@@ -12,17 +11,17 @@ let config: TypeOrmModuleOptions & PostgresConnectionOptions = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   entities: [Campaign],
-  synchronize: false,
+  synchronize: true,
   migrationsRun: false,
   migrations: ['dist/migrations/*.js'],
 };
 
-    config = {
-        ...config,
-        migrationsRun: false,
-        migrationsTransactionMode: 'each',
-        synchronize: false,
-    };
+config = {
+  ...config,
+  migrationsRun: false,
+  migrationsTransactionMode: 'each',
+  synchronize: true,
+};
 
 export const datasource = new DataSource(config);
 export { config };

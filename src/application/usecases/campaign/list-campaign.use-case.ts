@@ -1,7 +1,7 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CampaignRepository } from '@domain/repositories/campaign.repository';
 import { Campaign } from '@domain/entities/campaign.entity';
-import { InjectPinoLogger } from 'nestjs-pino';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 @Injectable()
 export class ListCampaignUseCase {
@@ -9,16 +9,18 @@ export class ListCampaignUseCase {
     private readonly campaingRepository: CampaignRepository,
 
     @InjectPinoLogger(ListCampaignUseCase.name)
-    private readonly logger: Logger,
-  ) {}
+    private readonly logger: PinoLogger,
+  ) {
+    this.logger.setContext(ListCampaignUseCase.name);
+  }
 
   async call(): Promise<Campaign[]> {
     try {
-      this.logger.log('ListCampaignUseCase START');
+      this.logger.info('ListCampaignUseCase START');
 
       const campaigns = await this.campaingRepository.listCampaigns();
 
-      this.logger.log('ListCampaignUseCase campaigns', campaigns);
+      this.logger.info('ListCampaignUseCase campaigns', campaigns);
       return campaigns;
     } catch (error) {
       this.logger.error(error);
