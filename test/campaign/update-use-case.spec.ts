@@ -3,6 +3,8 @@ import { CampaignStatus } from '@shared/const/status-campaign';
 import { CampaignRepository } from '@domain/repositories/campaign.repository';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UpdateCampaignDto } from '@presentation/campaign/dto/update-campaign.dto';
+import { LoggerServiceMock } from '@test/mocks/logger.service.mock';
+import { getLoggerToken } from 'nestjs-pino';
 
 const mockDto = (props?: Partial<UpdateCampaignDto>) => {
   return {
@@ -32,6 +34,14 @@ describe('updateCampaign', () => {
         {
           provide: CampaignRepository,
           useValue: mockRepository,
+        },
+        {
+          provide: getLoggerToken(UpdateCampaignUseCase.name),
+          useClass: LoggerServiceMock,
+        },
+        {
+          provide: 'pino-params',
+          useValue: {},
         },
       ],
     }).compile();

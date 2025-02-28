@@ -17,6 +17,9 @@ export function validateCampaignDates(
     );
   }
 
+  console.log(end, today);
+  console.log(isBefore(end, today));
+
   if (isBefore(end, today)) {
     return CampaignStatus.EXPIRED;
   }

@@ -1,3 +1,3 @@
 export interface ResponseDeleteDto {
-    message: string
+  message: string;
 }

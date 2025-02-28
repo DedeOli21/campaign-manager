@@ -3,13 +3,15 @@ import { CampaignStatus } from '@shared/const/status-campaign';
 import { CampaignRepository } from '@domain/repositories/campaign.repository';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateCampaignDto } from '@presentation/campaign/dto/create-campaign.dto';
+import { getLoggerToken } from 'nestjs-pino';
+import { LoggerServiceMock } from '@test/mocks/logger.service.mock';
 
 const mockDto = (props?: Partial<CreateCampaignDto>) => {
   return {
     name: 'Campanha 6',
     createdAt: new Date(),
-    startDate: new Date('2026-02-28'),
-    endDate: new Date('2026-03-28'),
+    startDate: new Date('2026-08-28'),
+    endDate: new Date('2026-09-28'),
     status: CampaignStatus.ACTIVE,
     category: 'Tecnologia',
     ...props,
@@ -29,6 +31,14 @@ describe('createCampaign', () => {
         {
           provide: CampaignRepository,
           useValue: mockRepository,
+        },
+        {
+          provide: getLoggerToken(CreateCampaignUseCase.name),
+          useClass: LoggerServiceMock,
+        },
+        {
+          provide: 'pino-params',
+          useValue: {},
         },
       ],
     }).compile();
@@ -72,15 +82,18 @@ describe('createCampaign', () => {
 
   it('if the end date is before the start date, should throw an error', async () => {
     const dto = mockDto({
-      endDate: new Date('2025-02-25'),
-      startDate: new Date('2025-02-26'),
+      endDate: new Date('2025-05-25'),
+      startDate: new Date('2025-06-26'),
     });
 
     await expect(createCampaignUseCase.call(dto)).rejects.toThrow();
   });
 
   it('if the end date for less than date now, should be status expired', async () => {
-    const dto = mockDto({ endDate: new Date('2021-02-26'), status: null });
+    const dto = mockDto({
+      startDate: new Date('2025-03-01'),
+      endDate: new Date('2025-02-26'),
+    });
 
     const createdCampaign = await createCampaignUseCase.call(dto);
 
@@ -89,8 +102,19 @@ describe('createCampaign', () => {
 
   it('if the end date is before the start date, should throw an error', async () => {
     const dto = mockDto({
-      endDate: new Date('2025-02-25'),
-      startDate: new Date('2025-02-26'),
+      startDate: new Date('2025-06-26'),
+      endDate: new Date('2025-03-25'),
+    });
+
+    mockRepository.createCampaign.mockResolvedValue(dto);
+
+    await expect(createCampaignUseCase.call(dto)).rejects.toThrow();
+  });
+
+  it('if the start date is before the now, should throw an error', async () => {
+    const dto = mockDto({
+      startDate: new Date('2024-06-26'),
+      endDate: new Date('2025-03-25'),
     });
 
     mockRepository.createCampaign.mockResolvedValue(dto);

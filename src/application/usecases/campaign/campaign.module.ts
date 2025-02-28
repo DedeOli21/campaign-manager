@@ -5,9 +5,10 @@ import { ListCampaignUseCase } from '@app/usecases/campaign/list-campaign.use-ca
 import { UpdateCampaignUseCase } from '@app/usecases/campaign/update-campaign.use-case';
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '@infra/database/database.module';
+import { LoggerModule } from 'nestjs-pino';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, LoggerModule.forRoot()],
   providers: [
     CreateCampaignUseCase,
     FindCampaignUseCase,

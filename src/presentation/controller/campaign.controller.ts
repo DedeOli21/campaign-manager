@@ -41,8 +41,8 @@ export class CampaignController {
     description: 'Erro interno do servidor',
     type: InternalServerError,
   })
-  create(@Body() createCampaignDto: CreateCampaignDto) {
-    return this.createCampaign.call(createCampaignDto);
+  async create(@Body() createCampaignDto: CreateCampaignDto) {
+    return await this.createCampaign.call(createCampaignDto);
   }
 
   @Get()
@@ -51,8 +51,8 @@ export class CampaignController {
     status: HttpStatus.OK,
     description: 'Lista de campanhas retornada com sucesso.',
   })
-  findAll() {
-    return this.findAllCampaign.call();
+  async findAll() {
+    return await this.findAllCampaign.call();
   }
 
   @Get(':id')
@@ -71,8 +71,8 @@ export class CampaignController {
     description: 'Campanha não encontrada.',
     type: NotFoundSwagger,
   })
-  findOne(@Param('id') id: number) {
-    return this.findCampaign.call({ id });
+  async findOne(@Param('id') id: number) {
+    return await this.findCampaign.call({ id });
   }
 
   @Put(':id')
@@ -96,11 +96,11 @@ export class CampaignController {
     description: 'Erro interno do servidor.',
     type: InternalServerError,
   })
-  update(
+  async update(
     @Param('id') id: number,
     @Body() updateCampaignDto: UpdateCampaignDto,
   ) {
-    return this.updateCampaign.call({ id, ...updateCampaignDto });
+    return await this.updateCampaign.call({ id, ...updateCampaignDto });
   }
 
   @Delete(':id')
@@ -119,7 +119,7 @@ export class CampaignController {
     description: 'Campanha não encontrada.',
     type: NotFoundSwagger,
   })
-  softDelete(@Param('id') id: number) {
-    return this.deleteCampaign.call({ id });
+  async softDelete(@Param('id') id: number) {
+    return await this.deleteCampaign.call({ id });
   }
 }

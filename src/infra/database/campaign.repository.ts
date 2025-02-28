@@ -5,7 +5,6 @@ import { FindCampaignDto } from '@presentation/campaign/dto/find-campaign.dto';
 import { UpdateCampaignDto } from '@presentation/campaign/dto/update-campaign.dto';
 import { Campaign } from '@domain/entities/campaign.entity';
 import { CampaignRepository } from '@domain/repositories/campaign.repository';
-import { validateCampaignDates } from '@shared/helpers/verify-date.helper';
 import { Repository } from 'typeorm';
 import { ResponseDeleteDto } from '@infra/dto/response-delete.dto';
 
@@ -31,8 +30,11 @@ export class CampaignImplementation implements CampaignRepository {
     }
   }
 
-  async deleteCampaign(deleteCampaignDto: DeleteCampaignDto): Promise<ResponseDeleteDto> {
+  async deleteCampaign(
+    deleteCampaignDto: DeleteCampaignDto,
+  ): Promise<ResponseDeleteDto> {
     const campaign = await this.findCampaign({ id: deleteCampaignDto.id });
+
     await this.campaignRepository.softDelete(campaign.id);
 
     return {
@@ -54,7 +56,7 @@ export class CampaignImplementation implements CampaignRepository {
     }
   }
 
-  async listCampaigns(): Promise<any> {
+  async listCampaigns(): Promise<Campaign[]> {
     return await this.campaignRepository.find();
   }
 }
