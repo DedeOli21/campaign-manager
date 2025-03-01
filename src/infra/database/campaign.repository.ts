@@ -17,25 +17,14 @@ export class CampaignImplementation implements CampaignRepository {
   async createCampaign(
     createCampaignDto: CreateCampaignDto,
   ): Promise<Campaign> {
-    try {
-      const campaing = this.campaignRepository.create(createCampaignDto);
-
-      if (!campaing) {
-        throw new Error('Error creating campaign');
-      }
-
-      return await this.campaignRepository.save(campaing);
-    } catch (error) {
-      throw new Error(error);
-    }
+    const campaing = this.campaignRepository.create(createCampaignDto);
+    return await this.campaignRepository.save(campaing);
   }
 
   async deleteCampaign(
     deleteCampaignDto: DeleteCampaignDto,
   ): Promise<ResponseDeleteDto> {
-    const campaign = await this.findCampaign({ id: deleteCampaignDto.id });
-
-    await this.campaignRepository.softDelete(campaign.id);
+    await this.campaignRepository.softDelete(deleteCampaignDto.id);
 
     return {
       message: `Campaign with ID ${deleteCampaignDto.id} successfully deleted.`,
@@ -49,11 +38,7 @@ export class CampaignImplementation implements CampaignRepository {
   async updateCampaign(
     updateCampaignDto: UpdateCampaignDto,
   ): Promise<Campaign> {
-    try {
-      return this.campaignRepository.save(updateCampaignDto);
-    } catch (error) {
-      throw new Error(error);
-    }
+    return await this.campaignRepository.save(updateCampaignDto);
   }
 
   async listCampaigns(): Promise<Campaign[]> {

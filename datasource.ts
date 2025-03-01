@@ -11,7 +11,7 @@ let config: TypeOrmModuleOptions & PostgresConnectionOptions = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   entities: [Campaign],
-  synchronize: true,
+  synchronize: false,
   migrationsRun: false,
   migrations: ['dist/migrations/*.js'],
 };
@@ -20,7 +20,7 @@ config = {
   ...config,
   migrationsRun: false,
   migrationsTransactionMode: 'each',
-  synchronize: true,
+  synchronize: false,
 };
 
 export const datasource = new DataSource(config);

@@ -4,9 +4,10 @@ Este é o backend de um sistema para gerenciar campanhas publicitárias, desenvo
 
 ## 📋 **Requisitos**
 Antes de começar, certifique-se de ter instalado:
-- **Node.js** (versão 16 ou superior)
+- **Node.js** (versão 20 ou superior)
+- **NestJs** (versão 20 ou superior)
 - **Yarn**
-- **Docker e Docker Compose** (para rodar o banco de dados PostgreSQL)
+- **Docker**
 
 ---
 
@@ -42,10 +43,7 @@ Antes de começar, certifique-se de ter instalado:
 Para rodar o banco de dados PostgreSQL via Docker, execute:
   docker-compose up -d
 
-  Isso iniciará um contêiner PostgreSQL na porta 5432.
-
-  Caso prefira rodar o banco localmente sem Docker, configure as credenciais no .env.
-
+  Isso iniciará um contêiner PostgreSQL na porta 5432 e a API na porta 3000.
 
 ## ▶️ **Executando o Projeto**
 
@@ -60,20 +58,58 @@ Acesse após iniciar o projeto: 🔗 http://localhost:3000/api
 ## 📂 **Estrutura do Projeto**
 
 ```
- ┣ 📂 src
- ┃ ┣ 📂 campaign
- ┃ ┃ ┣ 📜 campaign.module.ts      # Módulo principal da campanha
- ┃ ┃ ┣ 📜 campaign.service.ts      # Serviço da campanha (regras de negócio)
- ┃ ┃ ┣ 📜 campaign.controller.ts   # Controlador da campanha (rotas da API)
- ┃ ┃ ┣ 📜 entities/campaign.entity.ts  # Modelo da entidade campanha
- ┃ ┃ ┣ 📜 dto/create-campaign.dto.ts   # DTO para criação de campanha
- ┃ ┃ ┣ 📜 dto/update-campaign.dto.ts   # DTO para atualização de campanha
- ┃ ┣ 📂 helpers
- ┃ ┃ ┣ 📜 date-validation.helper.ts   # Helper para validação de datas
- ┃ ┣ 📜 app.module.ts                 # Módulo raiz da aplicação
- ┣ 📜 .env.example                    # Exemplo de configuração do ambiente
- ┣ 📜 docker-compose.yml               # Configuração do banco via Docker
- ┣ 📜 README.md                        # Documentação do projeto
+ 📦 src
+┣ 📂 application
+┃ ┣ 📂 usecases
+┃ ┃ ┣ 📂 campaign
+┃ ┃ ┃ ┣ 📜 campaign.module.ts          # Módulo de casos de uso da campanha
+┃ ┃ ┃ ┣ 📜 create-campaign.use-case.ts # Caso de uso para criar uma campanha
+┃ ┃ ┃ ┣ 📜 delete-campaign.use-case.ts # Caso de uso para deletar uma campanha
+┃ ┃ ┃ ┣ 📜 find-campaign.use-case.ts   # Caso de uso para buscar uma campanha
+┃ ┃ ┃ ┣ 📜 list-campaign.use-case.ts   # Caso de uso para listar campanhas
+┃ ┃ ┃ ┗ 📜 update-campaign.use-case.ts # Caso de uso para atualizar uma campanha
+┃ ┃ ┗ 📜 application.module.ts         # Módulo principal da camada de aplicação
+┣ 📂 domain
+┃ ┣ 📂 entities
+┃ ┃ ┗ 📜 campaign.entity.ts            # Entidade da campanha (modelo de dados)
+┃ ┗ 📂 repositories
+┃ ┃ ┗ 📜 campaign.repository.ts        # Repositório de campanha (interface)
+┣ 📂 infra
+┃ ┣ 📂 database
+┃ ┃ ┣ 📜 campaign.repository.ts        # Implementação do repositório de campanha
+┃ ┃ ┗ 📜 database.module.ts            # Configuração do banco de dados
+┃ ┗ 📂 dto
+┃ ┃ ┣ 📜 response-create.dto.ts        # DTO para resposta de criação
+┃ ┃ ┣ 📜 response-delete.dto.ts        # DTO para resposta de deleção
+┃ ┃ ┣ 📜 response-find.dto.ts          # DTO para resposta de busca
+┃ ┃ ┗ 📜 response-list.dto.ts          # DTO para resposta de listagem
+┣ 📂 presentation
+┃ ┣ 📂 campaign
+┃ ┃ ┣ 📂 dto
+┃ ┃ ┃ ┣ 📜 create-campaign.dto.ts      # DTO para criar uma campanha
+┃ ┃ ┃ ┣ 📜 delete-campaign.dto.ts      # DTO para deletar uma campanha
+┃ ┃ ┃ ┣ 📜 find-campaign.dto.ts        # DTO para buscar uma campanha
+┃ ┃ ┃ ┗ 📜 update-campaign.dto.ts      # DTO para atualizar uma campanha
+┃ ┃ ┗ 📜 campaign.module.ts            # Módulo da camada de apresentação da campanha
+┃ ┣ 📂 controller
+┃ ┃ ┗ 📜 campaign.controller.ts        # Controlador da campanha (endpoints REST)
+┃ ┗ 📜 presentation.module.ts          # Módulo principal da camada de apresentação
+┣ 📂 shared
+┃ ┣ 📂 const
+┃ ┃ ┗ 📜 status-campaign.ts            # Constantes relacionadas ao status da campanha
+┃ ┣ 📂 databases
+┃ ┃ ┗ 📜 campaign.ts                   # Configuração de conexão com banco
+┃ ┣ 📂 helpers
+┃ ┃ ┗ 📜 verify-date.helper.ts         # Helper para verificação de datas
+┃ ┗ 📂 swagger
+┃ ┃ ┣ 📜 internal-server-error.swagger.ts # Definição do erro 500 no Swagger
+┃ ┃ ┗ 📜 not-found.swagger.ts          # Definição do erro 404 no Swagger
+┣ 📜 app.module.ts                     # Módulo raiz da aplicação
+┣ 📜 main.ts                            # Arquivo de bootstrap do NestJS
+┣ 📜 swagger.ts                         # Configuração do Swagger para documentação da API
+┣ 📜 .env.example                       # Exemplo do arquivo de configuração do ambiente
+┣ 📜 docker-compose.yml                  # Configuração do banco via Docker
+┣ 📜 README.md                           # Documentação do projeto
 ```
 
 ## 🚀 Endpoints Principais
@@ -96,6 +132,14 @@ Acesse após iniciar o projeto: 🔗 http://localhost:3000/api
 6. Swagger - Documentação interativa da API
 7. Jest - Testes unitários e de integração
 
+## 🛠 Rodando Testes
+ Para rodar os testes unitários:
+
+```yarn test```
+
+Para rodar os testes de integração:
+
+```yarn test:e2e```
 
 
 ## 📜 Licença
