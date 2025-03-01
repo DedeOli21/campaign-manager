@@ -7,7 +7,7 @@ import { ResponseDeleteDto } from '@infra/dto/response-delete.dto';
 @Injectable()
 export class DeleteCampaignUseCase {
   constructor(
-    private readonly campaingRepository: CampaignRepository,
+    private readonly campaignRepository: CampaignRepository,
 
     @InjectPinoLogger(DeleteCampaignUseCase.name)
     private readonly logger: PinoLogger,
@@ -19,14 +19,15 @@ export class DeleteCampaignUseCase {
     try {
       this.logger.info('DeleteCampaignUseCase START');
 
-      await this.campaingRepository.findCampaign(deleteCampaignDto);
+      const campaign =
+        await this.campaignRepository.findCampaign(deleteCampaignDto);
 
-      if (!deleteCampaignDto.id) {
+      if (!campaign.id) {
         throw new Error('Campaign ID not found');
       }
 
       const { message } =
-        await this.campaingRepository.deleteCampaign(deleteCampaignDto);
+        await this.campaignRepository.deleteCampaign(deleteCampaignDto);
 
       this.logger.info(message);
 

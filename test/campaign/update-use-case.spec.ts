@@ -87,7 +87,7 @@ describe('updateCampaign', () => {
     await expect(updateCampaignUseCase.call(dto)).rejects.toThrow();
   });
 
-  it('should throw an error when dont find campaing', async () => {
+  it('should throw an error when dont find campaign', async () => {
     const dto = mockDto();
 
     mockRepository.findCampaign = jest.fn().mockResolvedValueOnce(null);

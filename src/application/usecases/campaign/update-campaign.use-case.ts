@@ -8,7 +8,7 @@ import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 @Injectable()
 export class UpdateCampaignUseCase {
   constructor(
-    private readonly campaingRepository: CampaignRepository,
+    private readonly campaignRepository: CampaignRepository,
 
     @InjectPinoLogger(UpdateCampaignUseCase.name)
     private readonly logger: PinoLogger,
@@ -20,7 +20,7 @@ export class UpdateCampaignUseCase {
     try {
       this.logger.info('UpdateCampaignUseCase START');
 
-      const campaign = await this.campaingRepository.findCampaign({
+      const campaign = await this.campaignRepository.findCampaign({
         id: updateCampaignDto.id,
       });
 
@@ -47,7 +47,7 @@ export class UpdateCampaignUseCase {
 
       Object.assign(campaign, updateCampaignDto);
 
-      return await this.campaingRepository.updateCampaign(campaign);
+      return await this.campaignRepository.updateCampaign(campaign);
     } catch (error) {
       this.logger.error(error);
       throw new Error(error);

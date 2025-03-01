@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApplicationModule } from '@app/usecases/application.module';
 import { DatabaseModule } from './infra/database/database.module';
-import { DataBaseConnectionService } from '@shared/databases/campaing';
+import { DataBaseConnectionService } from '@shared/databases/campaign';
 import { ConfigModule } from '@nestjs/config';
 import { PresentationModule } from '@presentation/presentation.module';
 import { Campaign } from '@domain/entities/campaign.entity';

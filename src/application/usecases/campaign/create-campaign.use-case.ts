@@ -8,7 +8,7 @@ import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 @Injectable()
 export class CreateCampaignUseCase {
   constructor(
-    private readonly campaingRepository: CampaignRepository,
+    private readonly campaignRepository: CampaignRepository,
 
     @InjectPinoLogger(CreateCampaignUseCase.name)
     private readonly logger: PinoLogger,
@@ -18,7 +18,7 @@ export class CreateCampaignUseCase {
 
   async call(createCampaignDto: CreateCampaignDto): Promise<Campaign> {
     try {
-      this.logger.info('CreateCampaignUseCase START');
+      this.logger.info('CreateCampaignUseCase START', new Date());
 
       const statusValid = validateCampaignDates(
         createCampaignDto.startDate,
@@ -27,7 +27,7 @@ export class CreateCampaignUseCase {
 
       this.logger.info('CreateCampaignUseCase statusValid', statusValid);
 
-      return await this.campaingRepository.createCampaign({
+      return await this.campaignRepository.createCampaign({
         ...createCampaignDto,
         status: statusValid,
       });

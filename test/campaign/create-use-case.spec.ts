@@ -47,7 +47,16 @@ describe('createCampaign', () => {
       CreateCampaignUseCase,
     );
 
+    jest
+      .useFakeTimers()
+      .setSystemTime(new Date('2025-03-01T12:00:00Z').getTime());
+
     jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+    jest.restoreAllMocks();
   });
 
   it('should be defined', () => {
@@ -91,7 +100,7 @@ describe('createCampaign', () => {
 
   it('if the end date for less than date now, should be status expired', async () => {
     const dto = mockDto({
-      startDate: new Date('2025-03-01'),
+      startDate: new Date('2025-03-02'),
       endDate: new Date('2025-02-26'),
     });
 

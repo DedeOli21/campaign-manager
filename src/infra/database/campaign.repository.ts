@@ -17,8 +17,8 @@ export class CampaignImplementation implements CampaignRepository {
   async createCampaign(
     createCampaignDto: CreateCampaignDto,
   ): Promise<Campaign> {
-    const campaing = this.campaignRepository.create(createCampaignDto);
-    return await this.campaignRepository.save(campaing);
+    const campaign = this.campaignRepository.create(createCampaignDto);
+    return await this.campaignRepository.save(campaign);
   }
 
   async deleteCampaign(

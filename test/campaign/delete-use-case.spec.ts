@@ -3,6 +3,20 @@ import { CampaignRepository } from '@domain/repositories/campaign.repository';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getLoggerToken } from 'nestjs-pino';
 import { LoggerServiceMock } from '@test/mocks/logger.service.mock';
+import { Campaign } from '@domain/entities/campaign.entity';
+import { CampaignStatus } from '@shared/const/status-campaign';
+
+const mockDto = (props?: Partial<Campaign>) => {
+  return {
+    name: 'Campanha 6',
+    createdAt: new Date(),
+    startDate: new Date('2026-08-28'),
+    endDate: new Date('2026-09-28'),
+    status: CampaignStatus.ACTIVE,
+    category: 'Tecnologia',
+    ...props,
+  };
+};
 
 describe('deleteCampaign', () => {
   const mockRepository = {
@@ -11,6 +25,7 @@ describe('deleteCampaign', () => {
         message: `Campaign with ID ${deleteCampaignDto.id} successfully deleted.`,
       };
     }),
+    findCampaign: jest.fn().mockImplementation(() => mockDto()),
   };
 
   let deleteCampaignUseCase: DeleteCampaignUseCase;
@@ -47,27 +62,29 @@ describe('deleteCampaign', () => {
 
   it('should delete a campaign', async () => {
     const dto = { id: 1 };
+    jest
+      .spyOn(mockRepository, 'findCampaign')
+      .mockResolvedValueOnce(mockDto({ id: 1 }));
 
     const result = await deleteCampaignUseCase.call(dto);
 
-    expect(result).toEqual(`Campaign with ID ${dto.id} successfully deleted.`);
+    expect(result.message).toEqual(
+      `Campaign with ID ${dto.id} successfully deleted.`,
+    );
     expect(mockRepository.deleteCampaign).toHaveBeenCalledWith(dto);
   });
 
   it('should throw an error if campaign does not exist', async () => {
-    mockRepository.deleteCampaign.mockRejectedValueOnce(
+    mockRepository.findCampaign.mockRejectedValueOnce(
       new Error('error') as never,
     );
 
     await expect(deleteCampaignUseCase.call({ id: 999 })).rejects.toThrow();
   });
 
-  // it('should call logger.error on exception', async () => {
-  //   jest
-  //     .spyOn(mockRepository, 'deleteCampaign')
-  //     .mockRejectedValue(new Error('Deletion failed') as never);
+  it('should throw an error if campaign does not exist', async () => {
+    mockRepository.findCampaign.mockResolvedValueOnce(mockDto());
 
-  //   await expect(deleteCampaignUseCase.call({ id: 1 })).rejects.toThrow();
-  //   expect(logger.error).toHaveBeenCalledWith(expect.any(Error));
-  // });
+    await expect(deleteCampaignUseCase.call({ id: 1 })).rejects.toThrow();
+  });
 });
